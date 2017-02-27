@@ -1,0 +1,43 @@
+<%- |
+  Numeric $reaper_interval,
+  Numeric $archived_calls,
+  Integer $consumer_history,
+  Integer $repo_sync_history,
+  Integer $repo_publish_history,
+  Integer $repo_group_publish_history,
+  Integer $task_status_history,
+  Integer $task_result_history
+| -%>
+# = Data Reaping =
+#
+# Controls the frequency in which reporting data is automatically removed from
+# the database. Database entries that exceed the given thresholds will be
+# deleted from the database when the reaper runs.
+#
+# reaper_interval: float; time in days between checks for old data in
+#     the database
+#
+# consumer_history: float; time in days to store consumer history events
+#
+# repo_sync_history: float; time in days to store repository sync history events
+#
+# repo_publish_history: float; time in days to store repository publish history
+#     events
+#
+# repo_group_publish_history: float; time in days to store repository group
+#     publish history events
+#
+# task_status_history: float; time in days to store task status history in the db
+# task_result_history: float; time in days to store task results history
+
+[data_reaping]
+reaper_interval: <%= $reaper_interval %>
+archived_calls: <%= $archived_calls %>
+consumer_history: <%= $consumer_history %>
+repo_sync_history: <%= $repo_sync_history %>
+repo_publish_history: <%= $repo_publish_history %>
+repo_group_publish_history: <%= $repo_group_publish_history %>
+task_status_history: <%= $task_status_history %>
+task_result_history: <%= $task_result_history %>
+
+

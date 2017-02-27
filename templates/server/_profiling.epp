@@ -1,0 +1,23 @@
+<%- |
+  Boolean $enabled,
+  String  $directory
+| -%>
+# = Profiling =
+#
+# Settings for profiling Pulp tasks
+#
+# enabled:
+#   This enables the cProfile Python module to profile individual tasks and
+#   store the output by task ID in a directory. Note that enabling this can
+#   impact performance.
+#
+# directory:
+#   The directory that the cProfiles are written to. This directory must be
+#   writeable and readable by Pulp. This directory will be created automatically
+#   if it does not exist.
+
+[profiling]
+enabled: <%= $enabled %>
+directory: <%= $directory %>
+
+

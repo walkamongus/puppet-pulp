@@ -1,0 +1,49 @@
+<%- |
+  String  $broker_url,
+  Boolean $celery_require_ssl,
+  Variant[Stdlib::Absolutepath, Undef] $cacert,
+  Variant[Stdlib::Absolutepath, Undef] $keyfile,
+  Variant[Stdlib::Absolutepath, Undef] $certfile,
+  Variant[String, Undef] $login_method
+| -%>
+# = Asynchronous Tasks =
+#
+# Controls Pulp's Celery settings. These settings are used by the Pulp Server and Pulp Workers to
+# perform asynchronous, server-side task work such as syncing, publishing, or deletion of content.
+# Communication between these different components occurs through the broker.
+#
+# broker_url: A URL to a broker that Celery can use to queue tasks. For example, to configure
+#     Celery with a Qpid backend, set broker_url to:
+#
+#         qpid://<username>:<password>@<hostname>:<port>/
+#
+#     For RabbitMQ you can use the following broker_url style:
+#
+#         amqp://<username>:<password>@<hostname>:<port>/<vhost>
+#
+# celery_require_ssl: Require SSL if set to 'true', otherwise do not require SSL. The default is
+#     'false'.
+#
+# cacert: The absolute path to the PEM encoded CA Certificate allowing identity validation of the
+#     message bus. The default is '/etc/pki/pulp/qpid/ca.crt'.
+#
+# keyfile: The absolute path to the keyfile used for authentication to the message bus. This is the
+#     private key that corresponds with the certificate. The default value is
+#     '/etc/pki/pulp/qpid/client.crt'. Sometimes the key is kept in the same file as the
+#     certificate it corresponds with, and the default assumes this is the case.
+#
+# certfile: The absolute path to the PEM encoded certificate used for authentication to the message
+#     bus. The default value is '/etc/pki/pulp/qpid/client.crt'.
+#
+# login_method: Select the SASL login method used to connect to the broker. This should be left
+#     unset except in special cases such as SSL client certificate authentication.
+
+[tasks]
+broker_url: <%= $broker_url %>
+celery_require_ssl: <%= $celery_require_ssl %>
+<% if $cacert { -%>cacert: <%= $cacert %><% } -%>
+<% if $keyfile { -%>keyfile: <%= $keyfile %><% } -%>
+<% if $certfile { -%>certfile: <%= $certfile %><% } -%>
+<% if $login_method { -%>login_method: <%= $login_method %><% } -%>
+
+

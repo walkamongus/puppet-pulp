@@ -1,0 +1,37 @@
+<%- |
+  String  $server_name,
+  String  $key_url,
+  String  $ks_url,
+  String  $default_login,
+  String  $default_password,
+  Boolean $debugging_mode,
+  String  $log_level,
+  String  $working_directory
+| -%>
+# = Server =
+#
+# Controls general Pulp web server behavior.
+#
+# server_name:      hostname the admin client and consumers should use when accessing
+#                   the server; if not specified, this defaults to the server's fully qualified
+#                   domain name (FQDN)
+# default_login:    default admin username of the Pulp server; this user will be
+#                   the first time the server is started
+# default_password: default password for admin when it is first created; this
+#                   should be changed once the server is operational
+# debugging_mode:   boolean; toggles Pulp's debugging capabilities
+# log_level:        The desired logging level. Options are: CRITICAL, ERROR, WARNING, INFO, DEBUG,
+#                   and NOTSET. Pulp will default to INFO.
+# working_directory:path to where pulp workers can create working directories needed to complete tasks
+
+[server]
+server_name: <%= $server_name %>
+key_url: <%= $key_url %>
+ks_url: <%= $ks_url %>
+default_login: <%= $default_login %>
+default_password: <%= $default_password %>
+debugging_mode: <%= $debugging_mode %>
+log_level: <%= $log_level %>
+working_directory: <%= $working_directory %>
+
+

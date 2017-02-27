@@ -1,0 +1,52 @@
+<%- |
+  String  $redirect_host,
+  Integer $redirect_port,
+  String  $redirect_path,
+  Boolean $https_retrieval,
+  Integer $download_interval,
+  Integer $download_concurrency
+| -%>
+# = Lazy =
+#
+# Settings for lazy content loading.
+#
+# redirect_host:
+#   The host FQDN or IP to which requests are redirected. Defaults to
+#   the local host's fully qualified domain name.
+#
+# redirect_port:
+#   The TCP port to which requests are redirected. By default no port
+#   is stated explicitly so an HTTP redirect will use port 80 and an
+#   HTTPS redirect will use port 443. The protocol used will match the
+#   protocol the client used for the initial request.
+#
+# redirect_path:
+#   The base path to which requests are redirected. Defaults to /streamer/
+#
+# https_retrieval:
+#   boolean; controls whether Pulp uses HTTPS or HTTP to
+#   retrieve content from the streamer.
+#   WARNING: Setting this to 'false' is not safe if you wish
+#            to use Pulp to provide repository entitlement
+#            enforcement. It is strongly recommended to keep
+#            this set to 'true' and use certificates that are
+#            signed by a trusted authority on the web server
+#            that serves as the streamer reverse proxy.
+#
+# download_interval:
+#   The interval in minutes between checks for content cached
+#   by the Squid proxy.
+#
+# download_concurrency:
+#   The number of downloads to perform concurrently when
+#   downloading content from the Squid cache.
+
+[lazy]
+redirect_host: <%= $redirect_host %>
+redirect_port: <%= $redirect_port %>
+redirect_path: <%= $redirect_path %>
+https_retrieval: <%= $https_retrieval %>
+download_interval: <%= $download_interval %>
+download_concurrency: <%= $download_concurrency %>
+
+

@@ -1,0 +1,18 @@
+<%- |
+  String $rsa_key,
+  String $rsa_pub
+| -%>
+# = Authentication =
+#
+# Keys used for message authentication.
+#
+# rsa_key:
+#   The RSA private key used for authentication.
+# rsa_pub:
+#   The RSA public key used for authentication.
+
+[authentication]
+rsa_key = <%= $rsa_key %>
+rsa_pub = <%= $rsa_pub %>
+
+

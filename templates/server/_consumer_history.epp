@@ -1,0 +1,12 @@
+<%- | Integer $lifetime | -%>
+# = Consumer History =
+#
+# Controls the storage of recorded consumer events.
+#
+# lifetime: number of days to store consumer events; events older
+#     than this will be purged; set to -1 to disable
+
+[consumer_history]
+lifetime: <%= $lifetime %>
+
+

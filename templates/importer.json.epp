@@ -1,0 +1,12 @@
+<%- |
+  Variant[String, Undef]  $proxy_host,
+  Variant[Integer, Undef] $proxy_port,
+  Variant[String, Undef]  $proxy_username,
+  Variant[String, Undef]  $proxy_password
+| -%>
+{
+  "proxy_host": "<% if $proxy_host { %><%= $proxy_host %><% } else { %>null<% } %>",
+  "proxy_port": "<% if $proxy_port { %><%= $proxy_port %><% } else { %>null<% } %>",
+  "proxy_username": "<% if $proxy_username { %><%= $proxy_username %><% } else { %>null<% } %>",
+  "proxy_password": "<% if $proxy_password { %><%= $proxy_password %><% } else { %>null<% } %>"
+}

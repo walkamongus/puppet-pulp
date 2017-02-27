@@ -1,0 +1,40 @@
+<%- |
+  Boolean $enabled,
+  String  $uri,
+  String  $base,
+  String  $tls,
+  String  $default_role,
+  String  $filter,
+| -%>
+# = LDAP =
+#
+# Uncomment the below section with appropriate values to use an external LDAP
+# server for user authentication.
+#
+# enabled: boolean; controls whether or not LDAP authentication is enabled
+#
+# uri: url of LDAP server
+#
+# base: location in the directory from which the LDAP search begins
+#
+# tls: boolean; controls whether or not to use TLS security
+#
+# default_role: Id of the role to assign LDAP users to by default. This is
+#     optional. This role must first be created on the Pulp server. If
+#     default_role is not set or doesn't exist, LDAP users are given same
+#     default permissions as local users.
+#
+# filter: directive to set more restrictive LDAP filter to limit the LDAP
+#     users who can authenticate to Pulp
+
+# Deprecated! Please use apache's mod_authnz_ldap to do preauthentication. See
+# pulp's user guide for details.
+[ldap]
+enabled: <%= $enabled %>
+uri: <%= $uri %>
+base: <%= $base %>
+tls: <%= $tls %>
+default_role: <%= $default_role %>
+filter: <%= $filter %>
+
+

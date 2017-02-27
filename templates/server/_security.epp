@@ -1,0 +1,47 @@
+<%- |
+  Integer $user_cert_expiration,
+  Integer $consumer_cert_expiration,
+  String  $serial_number_path,
+  Variant[Stdlib::Absolutepath, Undef] $cacert,
+  Variant[Stdlib::Absolutepath, Undef] $cakey,
+  Variant[Stdlib::Absolutepath, Undef] $ssl_ca_certificate
+| -%>
+# = Security =
+#
+# Controls aspects of the Pulp web server security.
+#
+# For production installations, it is recommended that a new CA certificate be
+# generated for the signing of user and consumer certificates and configured
+# using the following properties.
+#
+# cacert: full path to the CA certificate that will be used to sign consumer
+#     and admin identification certificates; this must match the value of
+#     SSLCACertificateFile in /etc/httpd/conf.d/pulp.conf
+#     Deprecated! - Please note that both cacert and cakey settings will be
+#     removed in the next major release since Pulp will not sign certificates.
+#     However, Pulp will continue to support client certificates generated
+#     by users through Apache and pulp-admin.
+#
+# cakey: path to the private key for the above CA certificate
+#
+# ssl_ca_certificate: full path to the CA certificate used to sign the Pulp
+#     server's SSL certificate; consumers will use this to verify the
+#     Pulp server's SSL certificate during the SSL handshake
+#     Deprecated! - Please note that this setting will be removed in the next
+#     major release and will be replaced by a setting in the consumer.conf file
+#     that will allow the user to specify a directory path containing certificates.
+#
+# user_cert_expiration: number of days a user certificate is valid
+#
+# consumer_cert_expiration: number of days a consumer certificate is valid
+#
+
+[security]
+<% if $cacert { -%>cacert: <%= $cacert %> # Deprecated! See above description for details.<% } -%>
+<% if $cakey { -%>cakey: <%= $cakey %> # Deprecated! See above description for details.<% } -%>
+<% if $ssl_ca_certificate { -%>ssl_ca_certificate: <%= $ssl_ca_certificate %> # Deprecated! See above description for details.<% } -%>
+user_cert_expiration: <%= $user_cert_expiration %>
+consumer_cert_expiration: <%= $consumer_cert_expiration %>
+serial_number_path: <%= $serial_number_path %>
+
+

@@ -1,0 +1,23 @@
+<%- |
+  Boolean $enabled,
+  String  $oauth_key,
+  String  $oauth_secret
+| -%>
+# = OAuth =
+#
+# Uncomment the below section with appropriate values to use OAuth
+# authentication.
+#
+# enabled: boolean; controls whether OAuth authentication is enabled
+#
+# oauth_key: string; key to enable OAuth style authentication
+#
+# oauth_secret: string; shared secret that can be used for OAuth style
+#     authentication
+
+[oauth]
+enabled: <%= $enabled %>
+oauth_key: <%= $oauth_key %>
+oauth_secret: <%= $oauth_secret %>
+
+

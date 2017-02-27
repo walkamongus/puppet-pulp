@@ -1,0 +1,31 @@
+<%- |
+  Boolean $enabled,
+  String  $host,
+  Integer $port,
+  String  $from
+| -%>
+# = Email =
+#
+# Settings that allow the system to send email. It is recommended that
+# the system relay through a local MTA on the machine. Pulp does not retry in
+# case of error, so it is important to have a real MTA available locally.
+#
+# If there is a need to test email sending, it is recommended to run this:
+#   $ python -m smtpd -n -c DebuggingServer localhost:1025
+# which will write each message to stdout.
+#
+# host: host name of the MTA pulp should relay through
+#
+# port: destination port to connect on
+#
+# from: the "From" address of each email the system sends
+#
+# enabled: boolean controls whether or not emails will be sent
+
+[email]
+enabled: <%= $enabled %>
+host: <%= $host %>
+port: <%= $port %>
+from: <%= $from %>
+
+

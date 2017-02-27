@@ -1,0 +1,42 @@
+<%- |
+  Boolean       $repo_auth,
+  Array[String] $repo_url_prefixes,
+  Boolean       $verify_ssl,
+  Array[String] $disabled_authenticators,
+  String        $cert_location,
+  String        $global_cert_location,
+  String        $protected_repo_listing_file,
+  String        $crl_location
+| -%>
+# THIS FILE IS MANAGED BY PUPPET
+#
+[main]
+enabled: <%= $repo_auth %>
+log_failed_cert: true
+log_failed_cert_verbose: false
+max_num_certs_in_chain: 100
+<% unless $repo_url_prefixes =~ Array[Data,0,0] { -%>
+repo_url_prefixes: <%= $repo_url_prefixes.join(',') %>
+<% } -%>
+# If this is true, the client certificate will be verified by Pulp against the per-repo certificate
+# authorities. If it is false, client certificates will not be checked for signature or expiration.
+# If you don't need per-repo CAs, it is recommended to set this to false and use your web server to
+# check the client certificates against a trusted CA back. Setting this to true will have a negative
+# performance impact, so don't do that unless you need per-repo CAs. It is true by default to
+# maintain backwards compatibility.
+verify_ssl: <%= $verify_ssl %>
+
+# If set, this disables specific repo auth plugins. More than one plugin can be
+# specified in the form of "plugin1,plugin2,plugin3".
+# disabled_authenticators = oid_validation
+<% unless $disabled_authenticators =~ Array[Data,0,0] { -%>
+disabled_authenticators: <%= $disabled_authenticators.join(',') %>
+<% } -%>
+
+[repos]
+cert_location: <%= $cert_location %>
+global_cert_location: <%= $global_cert_location %>
+protected_repo_listing_file: <%= $protected_repo_listing_file %>
+
+[crl]
+location: <%= $crl_location %>

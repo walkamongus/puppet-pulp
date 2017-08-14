@@ -85,12 +85,6 @@ module Pulp
       config['filesystem']['id_cert_filename'] ||= "user-cert.pem"
 
       api_location  = "https://#{config['server']['host']}:#{config['server']['port']}#{config['server']['api_prefix']}"
-      verb_map      = {
-        :get    => Net::HTTP::Get,
-        :post   => Net::HTTP::Post,
-        :put    => Net::HTTP::Put,
-        :delete => Net::HTTP::Delete
-      }
 
       begin
         cert_path = File.expand_path("#{config['filesystem']['id_cert_dir']}/#{config['filesystem']['id_cert_filename']}")
@@ -109,7 +103,7 @@ module Pulp
 
       begin
         response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE, cert: cert, key: key) do |http|
-          request = verb_map[method.to_sym].new(uri.request_uri)
+          request = Net::HTTP.const_get(method.to_s.downcase.capitalize).new(uri.request_uri)
           request.add_field('Content-Type', 'application/json')
           if payload
             redacted_payload = Hash[payload.map { |k, v| [k, k =~ /pass/i ? '<REDACTED>' : v] }]
@@ -147,6 +141,12 @@ module Pulp
       properties
     end
 
+    def self.get_rpm_syncs(repo_id)
+      response = request(:get, "v2/repositories/#{repo_id}/importers/yum_importer/schedules/sync/")
+      data     = JSON.parse(response.body)
+      data
+    end
+
     def request(*args)
       self.class.request(*args)
     end
@@ -164,35 +164,19 @@ module Pulp
     end
 
     def get_repos
-      request('GET', 'v2/repositories/')
+      request(:get, 'v2/repositories/')
     end
 
     def get_repo(repo_id)
-      request('GET', "v2/repositories/#{repo_id}/")
+      request(:get, "v2/repositories/#{repo_id}/")
     end
 
     def get_rpm_repos
       self.class.get_rpm_repos
     end
 
-    #def get_repo_syncs(repo_id)
-    #  # returns an array with 2 values: an array of sync schedules and the repo type
-    #  info = request(repo_id, false)
-    #  return info if !info
-
-    #  # we need to see the repo type first
-    #  case info['notes']['_repo-type']
-    #  when 'rpm-repo'
-    #    importer = 'yum_importer'
-    #  when 'puppet-repo'
-    #    importer = 'puppet_importer'
-    #  when 'iso-repo'
-    #    importer = 'iso_importer'
-    #  else
-    #    print "[get_repo_syncs] Unknown repo type #{info['notes']['_repo-type']} for repo #{repo_id}.\n"
-    #    return [[], nil]
-    #  end
-    #  [request_api(repo_id, true, "/importers/#{importer}/schedules/sync/"), info['notes']['_repo-type']]
-    #end
+    def get_rpm_syncs(*args)
+      self.class.get_rpm_syncs(*args)
+    end
   end
 end

@@ -1,6 +1,6 @@
 <%- |
-  Integer $user_cert_expiration,
-  Integer $consumer_cert_expiration,
+  Integer[0] $user_cert_expiration,
+  Integer[0] $consumer_cert_expiration,
   String  $serial_number_path,
   Variant[Stdlib::Absolutepath, Undef] $cacert,
   Variant[Stdlib::Absolutepath, Undef] $cakey,

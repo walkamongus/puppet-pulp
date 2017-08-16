@@ -1,7 +1,7 @@
 <%- |
   Boolean $enabled,
   String  $host,
-  Integer $port,
+  Integer[1, 65535] $port,
   String  $from
 | -%>
 # = Email =

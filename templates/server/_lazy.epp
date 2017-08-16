@@ -1,10 +1,10 @@
 <%- |
   String  $redirect_host,
-  Integer $redirect_port,
+  Integer[1, 65535] $redirect_port,
   String  $redirect_path,
   Boolean $https_retrieval,
-  Integer $download_interval,
-  Integer $download_concurrency
+  Integer[0] $download_interval,
+  Integer[0] $download_concurrency
 | -%>
 # = Lazy =
 #

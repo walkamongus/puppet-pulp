@@ -1,4 +1,4 @@
-<%- | Integer $lifetime | -%>
+<%- | Integer[-1] $lifetime | -%>
 # = Consumer History =
 #
 # Controls the storage of recorded consumer events.

@@ -1,12 +1,12 @@
 <%- |
-  Numeric $reaper_interval,
-  Numeric $archived_calls,
-  Integer $consumer_history,
-  Integer $repo_sync_history,
-  Integer $repo_publish_history,
-  Integer $repo_group_publish_history,
-  Integer $task_status_history,
-  Integer $task_result_history
+  Variant[Integer[0], Float[0.0]] $reaper_interval,
+  Variant[Integer[0], Float[0.0]] $archived_calls,
+  Variant[Integer[0], Float[0.0]] $consumer_history,
+  Variant[Integer[0], Float[0.0]] $repo_sync_history,
+  Variant[Integer[0], Float[0.0]] $repo_publish_history,
+  Variant[Integer[0], Float[0.0]] $repo_group_publish_history,
+  Variant[Integer[0], Float[0.0]] $task_status_history,
+  Variant[Integer[0], Float[0.0]] $task_result_history
 | -%>
 # = Data Reaping =
 #

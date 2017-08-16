@@ -1,6 +1,6 @@
 <%- | 
-  Variant[Integer, Undef] $number_workers,
-  Variant[Integer, Undef] $max_tasks_per_child
+  Variant[Integer[0], Undef] $number_workers,
+  Variant[Integer[0], Undef] $max_tasks_per_child
 | -%>
 # Configuration file for Pulp's Celery workers
 

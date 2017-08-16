@@ -1,0 +1,128 @@
+---
+pulp::version: '2.14'
+pulp::pulp_packages_ensure: 'present'
+pulp::gofer_package_ensure: 'present'
+pulp::enable_plugins:
+  - 'rpm'
+pulp::http_user: 'apache'
+pulp::manage_http_user: true
+pulp::http_group: 'apache'
+pulp::manage_http_group: true
+pulp::proxy_host: ~
+pulp::proxy_port: ~
+pulp::proxy_username: ~
+pulp::proxy_password: ~
+pulp::number_workers: ~
+pulp::max_tasks_per_child: ~
+pulp::manage_repo: true
+pulp::repo_proxy: ~
+
+pulp::repo_auth: false
+pulp::repo_auth_repo_url_prefixes:
+  - '/pulp/repos'
+  - '/pulp/ostree/web'
+  - '/pulp/isos'
+pulp::repo_auth_verify_ssl: false
+pulp::repo_auth_disabled_authenticators: []
+pulp::repo_auth_cert_location: '/etc/pki/pulp/content'
+pulp::repo_auth_global_cert_location: '/etc/pki/pulp/content'
+pulp::repo_auth_protected_repo_listing_file: '/etc/pki/pulp/content/pulp-protected-repos'
+pulp::repo_auth_crl_location: '/etc/pki/pulp/content'
+
+# [database]
+pulp::database_name: 'pulp_database'
+pulp::database_seeds: 'localhost:27017'
+pulp::database_username: ~
+pulp::database_password: ~
+pulp::database_replica_set: ~
+pulp::database_ssl: false
+pulp::database_ssl_keyfile: ~
+pulp::database_ssl_certfile: ~
+pulp::database_verify_ssl: true
+pulp::database_ca_path: ~
+pulp::database_unsafe_autoretry: false
+pulp::database_write_concern: 'majority'
+
+# [server]
+pulp::server_server_name: %{::fqdn}
+pulp::server_key_url: '/pulp/gpg'
+pulp::server_ks_url: '/pulp/ks'
+pulp::server_default_login: 'admin'
+pulp::server_default_password: 'admin'
+pulp::server_debugging_mode: false
+pulp::server_log_level: 'INFO'
+pulp::server_working_directory: '/var/cache/pulp'
+
+# [authentication]
+pulp::authentication_rsa_key: '/etc/pki/pulp/rsa.key'
+pulp::authentication_rsa_pub: '/etc/pki/pulp/rsa_pub.key'
+
+# [security]
+pulp::security_cacert: ~
+pulp::security_cakey: ~
+pulp::security_ssl_ca_certificate: ~
+pulp::security_user_cert_expiration: 7
+pulp::security_consumer_cert_expiration: 3650
+pulp::security_serial_number_path: '/var/lib/pulp/sn.dat'
+
+# [consumer_history]
+pulp::consumer_history_lifetime: 180
+
+# [data_reaping]
+pulp::data_reaping_reaper_interval: 0.25
+pulp::data_reaping_archived_calls: 0.5
+pulp::data_reaping_consumer_history: 60
+pulp::data_reaping_repo_sync_history: 60
+pulp::data_reaping_repo_publish_history: 60
+pulp::data_reaping_repo_group_publish_history: 60
+pulp::data_reaping_task_status_history: 7
+pulp::data_reaping_task_result_history: 3
+
+# [ldap]
+pulp::ldap_enabled: false
+pulp::ldap_uri: 'ldap://localhost'
+pulp::ldap_base: 'dc=localhost'
+pulp::ldap_tls: 'no'
+pulp::ldap_default_role: '<role-id>'
+pulp::ldap_filter: '(gidNumber=200)'
+
+# [oauth]
+pulp::oauth_enabled: false
+pulp::oauth_oauth_key: 'pulp'
+pulp::oauth_oauth_secret: 'secret'
+
+# [messaging]
+pulp::messaging_url: 'tcp://localhost:5672'
+pulp::messaging_transport: 'qpid'
+pulp::messaging_auth_enabled: true
+pulp::messaging_cacert: ~
+pulp::messaging_clientcert: ~
+pulp::messaging_topic_exchange: 'amq.topic'
+pulp::messaging_event_notifications_enabled: false
+pulp::messaging_event_notification_url: 'qpid://localhost:5672/'
+
+# [tasks]
+pulp::tasks_broker_url: 'qpid://localhost:5672'
+pulp::tasks_celery_require_ssl: false
+pulp::tasks_cacert: ~
+pulp::tasks_keyfile: ~
+pulp::tasks_certfile: ~
+pulp::tasks_login_method: ~
+
+# [email]
+pulp::email_enabled: false
+pulp::email_host: 'localhost'
+pulp::email_port: 25
+pulp::email_from: 'no-reply@your.domain'
+
+# [lazy]
+pulp::lazy_redirect_host: %{::fqdn}
+pulp::lazy_redirect_port: 80
+pulp::lazy_redirect_path: '/streamer/'
+pulp::lazy_https_retrieval: false
+pulp::lazy_download_interval: 10
+pulp::lazy_download_concurrency: 5
+
+# [profiling]
+pulp::profiling_enabled: false
+pulp::profiling_directory: '/var/lib/pulp/c_profiles'

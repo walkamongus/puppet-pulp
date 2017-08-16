@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "author": "Chadwick Banning",
   "summary": "Puppet module to install and configure Pulp (and nothing else)",
+  "data_provider": "hiera",
   "license": "Apache-2.0",
   "source": "https://github.com/walkamongus/puppet-pulp",
   "project_page": "https://github.com/walkamongus/puppet-pulp",

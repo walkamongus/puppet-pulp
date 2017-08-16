@@ -44,7 +44,7 @@ pulp::database_unsafe_autoretry: false
 pulp::database_write_concern: 'majority'
 
 # [server]
-pulp::server_server_name: %{::fqdn}
+pulp::server_server_name: "%{::fqdn}"
 pulp::server_key_url: '/pulp/gpg'
 pulp::server_ks_url: '/pulp/ks'
 pulp::server_default_login: 'admin'
@@ -116,7 +116,7 @@ pulp::email_port: 25
 pulp::email_from: 'no-reply@your.domain'
 
 # [lazy]
-pulp::lazy_redirect_host: %{::fqdn}
+pulp::lazy_redirect_host: "%{::fqdn}"
 pulp::lazy_redirect_port: 80
 pulp::lazy_redirect_path: '/streamer/'
 pulp::lazy_https_retrieval: false
@@ -126,3 +126,25 @@ pulp::lazy_download_concurrency: 5
 # [profiling]
 pulp::profiling_enabled: false
 pulp::profiling_directory: '/var/lib/pulp/c_profiles'
+
+
+pulp::admin::packages_ensure: 'present'
+pulp::admin::enable_plugins:
+  - 'rpm'
+pulp::admin::host: "%{::fqdn}"
+pulp::admin::port: 443
+pulp::admin::api_prefix: '/pulp/api'
+pulp::admin::verify_ssl: true
+pulp::admin::ca_path: '/etc/pki/tls/certs/ca-bundle.crt'
+pulp::admin::upload_chunk_size: 1048576
+pulp::admin::role: 'admin'
+pulp::admin::extensions_dir: '/usr/lib/pulp/admin/extensions'
+pulp::admin::id_cert_dir: '~/.pulp'
+pulp::admin::id_cert_filename: 'user-cert.pem'
+pulp::admin::upload_working_dir: '~/.pulp/uploads'
+pulp::admin::poll_frequency_in_seconds: 1
+pulp::admin::enable_color: true
+pulp::admin::wrap_to_terminal: false
+pulp::admin::wrap_width: 80
+pulp::admin::puppet_upload_working_dir: '~/.pulp/puppet-uploads'
+pulp::admin::puppet_upload_chunk_size: 1048576

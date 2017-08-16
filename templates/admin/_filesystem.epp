@@ -1,0 +1,24 @@
+<%- |
+  Stdlib::Absolutepath $extensions_dir,
+  String $id_cert_dir,
+  String $id_cert_filename,
+  String $upload_working_dir
+| -%>
+#
+# The location of resources on the file system.
+#
+# extensions_dir:
+#   The location of admin client extensions.
+# id_cert_dir:
+#   The location of the directory where the Pulp user ID certificate is stored.
+# id_cert_filename:
+#   The name of the file containing the PEM encoded client private key and X.509
+#   certificate. This file is downloaded and stored here during login.
+# upload_working_dir:
+#   Directory where status files for in progress uploads will be stored
+
+[filesystem]
+extensions_dir: <%= $extensions_dir %>
+id_cert_dir: <%= $id_cert_dir %>
+id_cert_filename: <%= $id_cert_filename %>
+upload_working_dir: <%= $upload_working_dir %>

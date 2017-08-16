@@ -1,0 +1,40 @@
+<%- |
+  String $host,
+  Integer[1, 65535] $port,
+  String $api_prefix,
+  Boolean $verify_ssl,
+  Stdlib::Absolutepath $ca_path,
+  Integer[0] $upload_chunk_size
+| -%>
+#
+# The settings in this file are all commented by default, and the commented settings show the
+# default values that Pulp Admin will choose if not specified here.
+
+# The pulp server configuration
+#
+# host:
+#   The pulp server hostname. If not specified, this value will default to socket.gethostname().
+# port:
+#   The port providing the RESTful API
+# rsa_pub:
+#   The pulp server public key used for authentication.
+# api_prefix:
+#   The REST API prefix.
+# verify_ssl:
+#   Set this to False to configure the client not to verify that the server's SSL cert is signed by
+#   a trusted authority
+#   WARNING: Setting this to False is not safe if you wish to use Pulp with real passwords or
+#            any other private information. It is strongly recommended to keep this set to True, and
+#            to use certificates that are signed by a trusted authority on the web server that
+#            serves Pulp.
+# ca_path:
+#   This is a path to a file of concatenated trusted CA certificates, or to a directory of trusted
+#   CA certificates (with openssl-style hashed symlinks, one certificate per file).
+
+[server]
+host:<%= $host %>
+port: <%= $port %>
+api_prefix: <%= $api_prefix %>
+verify_ssl: <%= $verify_ssl %>
+ca_path: <%= $ca_path %>
+upload_chunk_size: <%= $upload_chunk_size %>

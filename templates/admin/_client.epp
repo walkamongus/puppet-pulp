@@ -1,0 +1,10 @@
+<%- |
+  String $role
+| -%>
+#
+# Client settings.
+#
+# role: The client role.
+
+[client]
+role: <%= $role %>

@@ -1,0 +1,25 @@
+<%- |
+  Integer[0] $poll_frequency_in_seconds,
+  Boolean $enable_color,
+  Boolean $wrap_to_terminal,
+  Integer[0] $wrap_width
+| -%>
+#
+# Admin client output.
+#
+# poll_frequency_in_seconds:
+#   Number of seconds between requests for any operation that repeatedly polls
+#   the server for data.
+# enable_color:
+#   Set this to false to disable all color escape sequences
+# wrap_to_terminal:
+#   If wrap_to_terminal is true, any text wrapping will use the current width of
+#   the terminal. If false, the value in wrap_width is used.
+# wrap_width:
+#   The number of characters written before wrapping to the next line.
+
+[output]
+poll_frequency_in_seconds: <%= $poll_frequency_in_seconds %>
+enable_color: <%= $enable_color %>
+wrap_to_terminal: <%= $wrap_to_terminal %>
+wrap_width: <%= $wrap_width %>

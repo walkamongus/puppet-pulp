@@ -19,6 +19,7 @@ class pulp (
   Boolean $manage_http_user,
   String $http_group,
   Boolean $manage_http_group,
+  Boolean $exec_pulp_manage_db,
   Boolean $manage_repo,
   Variant[String, Undef] $repo_proxy,
   Variant[String, Undef] $proxy_host,

@@ -14,6 +14,7 @@ pulp::proxy_username: ~
 pulp::proxy_password: ~
 pulp::number_workers: ~
 pulp::max_tasks_per_child: ~
+pulp::exec_pulp_manage_db: true
 pulp::manage_repo: true
 pulp::repo_proxy: ~
 

@@ -5,6 +5,28 @@
 #
 class pulp::service {
 
+  if $pulp::exec_pulp_manage_db {
+    exec { 'pulp-manage-db':
+      command   => 'pulp-manage-db && touch /var/tmp/pulp-manage-db.init',
+      user      => $pulp::http_user,
+      path      => [
+        'usr/local/bin',
+        '/usr/bin',
+        '/usr/local/sbin',
+        '/usr/sbin',
+      ],
+      timeout   => 240,
+      logoutput => true,
+      creates   => '/var/tmp/pulp-manage-db.init',
+      before    => [
+        Service['pulp_celerybeat'],
+        Service['pulp_resource_manager'],
+        Service['pulp_workers'],
+        Service['pulp_streamer'],
+      ],
+    }
+  }
+
   exec { 'reload_systemctl_daemon':
     command     => '/bin/systemctl daemon-reload',
     refreshonly => true,

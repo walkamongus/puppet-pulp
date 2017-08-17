@@ -174,11 +174,6 @@ class pulp::config {
     }),
   }
 
-  file { '/etc/pki/pulp/content/pulp-global-repo.ca':
-    ensure => link,
-    target => $pulp::security_cacert,
-  }
-
   file { $pulp::authentication_rsa_key:
     ensure => file,
     owner  => 'root',

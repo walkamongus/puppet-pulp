@@ -1,5 +1,4 @@
 require_relative '../../../puppet_x/pulp/api.rb'
-require 'pp'
 
 Puppet::Type.type(:pulp_rpm_repo).provide(:api, :parent => Pulp::Api) do
   commands :pulp_admin => '/usr/bin/pulp-admin'
@@ -17,12 +16,12 @@ Puppet::Type.type(:pulp_rpm_repo).provide(:api, :parent => Pulp::Api) do
   end
 
   def self.instances
-    response = get_rpm_repos()
-    ids      = JSON.parse(response.body).collect { |item| item['id'] }
+    response = get_rpm_repos
+    ids      = response.collect { |item| item['id'] }
 
     ids.collect do |id|
       repo  = {}
-      props = get_properties('/v2/repositories', id)
+      props = get_repo_properties('/v2/repositories', id)
 
       repo[:ensure]       = :present
       repo[:name]         = props[:id]
@@ -86,7 +85,7 @@ Puppet::Type.type(:pulp_rpm_repo).provide(:api, :parent => Pulp::Api) do
   end
 
   def create
-    payload = {
+    params = {
       :id                 => @resource[:name],
       :display_name       => @resource[:display_name],
       :description        => @resource[:description],
@@ -131,7 +130,7 @@ Puppet::Type.type(:pulp_rpm_repo).provide(:api, :parent => Pulp::Api) do
       }]
     }
 
-    request(:post, '/v2/repositories/', payload)
+    request(:post, '/v2/repositories/', params)
     request(:post, "/v2/repositories/#{@resource[:name]}/actions/sync/") if @resource[:sync] == :true
     @property_hash[:ensure] = :present
   end
@@ -214,29 +213,29 @@ Puppet::Type.type(:pulp_rpm_repo).provide(:api, :parent => Pulp::Api) do
   end
 
   def update_metadata
-    payload = {
+    params = {
       :delta => {
        :display_name => @resource[:display_name],
        :description  => @resource[:description],
        :notes        => @resource[:notes].merge({:'_repo-type' => 'rpm-repo'})
       }
     }
-    request(:put, "/v2/repositories/#{@property_hash[:name]}/", payload)
+    request(:put, "/v2/repositories/#{@property_hash[:name]}/", params)
   end
 
   def update_distributor(key, value)
-    payload = { :distributor_config => { key.to_sym => value } }
-    request(:put, "/v2/repositories/#{@property_hash[:name]}/distributors/yum_distributor/", payload)
+    params = { :distributor_config => { key.to_sym => value } }
+    request(:put, "/v2/repositories/#{@property_hash[:name]}/distributors/yum_distributor/", params)
   end
 
   def update_importer(key, value)
-    payload = { :importer_config => { key.to_sym => value } }
-    request(:put, "/v2/repositories/#{@property_hash[:name]}/importers/yum_importer/", payload)
+    params = { :importer_config => { key.to_sym => value } }
+    request(:put, "/v2/repositories/#{@property_hash[:name]}/importers/yum_importer/", params)
   end
 
   def update_auto_publish
-    payload = {:delta => {:auto_publish => sym_to_bool(@resource[:auto_publish])}, :distributor_config => {}}
-    request(:put, "/v2/repositories/#{@property_hash[:name]}/distributors/yum_distributor/", payload)
+    params = {:delta => {:auto_publish => sym_to_bool(@resource[:auto_publish])}, :distributor_config => {}}
+    request(:put, "/v2/repositories/#{@property_hash[:name]}/distributors/yum_distributor/", params)
   end
 
   def flush

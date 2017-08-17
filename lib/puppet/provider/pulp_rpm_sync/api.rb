@@ -10,12 +10,12 @@ Puppet::Type.type(:pulp_rpm_sync).provide(:api, :parent => Pulp::Api) do
   end
 
   def self.instances
-    response = get_rpm_repos()
-    ids      = JSON.parse(response.body).collect { |item| item['id'] }
+    response  = get_rpm_repos
+    ids       = response.collect { |item| item['id'] }
     schedules = []
 
     ids.each do |id|
-      syncs = get_rpm_syncs(id)
+      syncs = get_yum_importer_syncs(id)
       next if syncs.empty?
       syncs.each do |sync|
         schedule = {}
@@ -45,13 +45,13 @@ Puppet::Type.type(:pulp_rpm_sync).provide(:api, :parent => Pulp::Api) do
   end
 
   def create
-    payload = {
+    params = {
       :override_config   => @resource[:override_config],
       :schedule          => @resource[:sync_schedule],
       :failure_threshold => @resource[:failure_threshold],
       :enabled           => sym_to_bool(@resource[:enabled]),
     }
-    request(:post, "/v2/repositories/#{@resource[:repo]}/importers/yum_importer/schedules/sync/", payload)
+    request(:post, "/v2/repositories/#{@resource[:repo]}/importers/yum_importer/schedules/sync/", params)
     @property_hash[:ensure] = :present
   end
 
@@ -83,13 +83,13 @@ Puppet::Type.type(:pulp_rpm_sync).provide(:api, :parent => Pulp::Api) do
   end
 
   def update
-    payload = {
+    params = {
       :schedule          => @resource[:sync_schedule],
       :override_config   => @resource[:override_config],
       :failure_threshold => @resource[:failure_threshold],
       :enabled           => sym_to_bool(@resource[:enabled]),
     }
-    request(:put, "/v2/repositories/#{@property_hash[:repo]}/importers/yum_importer/schedules/sync/#{@property_hash[:id]}/", payload)
+    request(:put, "/v2/repositories/#{@property_hash[:repo]}/importers/yum_importer/schedules/sync/#{@property_hash[:id]}/", params)
   end
 
   def flush

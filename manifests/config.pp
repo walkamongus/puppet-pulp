@@ -287,8 +287,15 @@ class pulp::config {
     }),
   }
 
-  exec { 'run pulp-gen-ca':
-    command => '/usr/bin/pulp-gen-ca-certificate',
+  exec { 'run_pulp-gen-key-pair':
+    command => '/bin/pulp-gen-key-pair',
+    onlyif  =>  '/usr/bin/test -f /bin/pulp-gen-key-pair',
+    creates => '/etc/pki/pulp/rsa_pub.key',
+  }
+
+  exec { 'run_pulp-gen-ca-certificate':
+    command => '/bin/pulp-gen-ca-certificate',
+    onlyif  =>  '/usr/bin/test -f /bin/pulp-gen-ca-certificate',
     creates => '/etc/pki/pulp/ca.crt',
   }
 

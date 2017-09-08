@@ -8,7 +8,7 @@ describe 'pulp' do
           facts
         end
 
-        context "pulp class without any parameters" do
+        context "pulp class with default parameters" do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('pulp::repos').that_comes_before('Class[pulp::install]') }

@@ -51,7 +51,8 @@ module Pulp
     end
 
     def self.get_user_certificate(certificate_path, login_url)
-      config     = ini_parse("#{ENV['HOME']}/.pulp/admin.conf")
+      home       = ENV['HOME'] || '/root'
+      config     = ini_parse("#{home}/.pulp/admin.conf")
       uri        = URI.parse(login_url)
       basic_auth = {:username => config['auth']['username'], :password => config['auth']['password']}
       api = Pulp::ApiClient.new(uri.host, uri.port, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE)

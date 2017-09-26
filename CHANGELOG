@@ -2,3 +2,5 @@
 - Initial release
 2017-09-11 Release 0.1.1
 - Fix quoted nulls in importer config
+2017-09-26 Release 0.1.2
+- Add default .pulp/admin.conf location when HOME environment variable is not set

@@ -1,6 +1,6 @@
 {
   "name": "walkamongus-pulp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Chadwick Banning",
   "summary": "Puppet module to install and configure Pulp (and nothing else)",
   "data_provider": "hiera",

@@ -17,7 +17,7 @@ describe 'pulp' do
         context "pulp::service class with default parameters on #{os}" do
           let(:params) {{ }}
 
-          it { should contain_exec('pulp-manage-db').with_command('pulp-manage-db && touch /var/tmp/pulp-manage-db.init') }
+          it { should contain_exec('pulp-manage-db').with_command('pulp-manage-db && touch /var/lib/pulp/pulp-manage-db.init') }
         end
       end
     end

@@ -25,6 +25,12 @@ class pulp::service {
         Service['pulp_streamer'],
       ],
     }
+    exec { 'pulp-manage-db-transition-to-new-touchfile':
+      command => 'touch /var/lib/pulp/pulp-manage-db.init',
+      user    => $pulp::http_user,
+      onlyif  => 'test -f /var/tmp/pulp-manage-db.init',
+      before  => Exec['pulp-manage-db'],
+    }
   }
 
   exec { 'reload_systemctl_daemon':

@@ -6,8 +6,19 @@
 class pulp::service {
 
   if $pulp::exec_pulp_manage_db {
+    exec { 'pulp-manage-db-stop-services':
+      command => 'systemctl stop pulp_*.service',
+      path    => [
+        '/usr/bin',
+        '/usr/local/sbin',
+        '/usr/sbin',
+      ],
+      before  =>  Exec['pulp-manage-db'],
+      unless  => "grep -q ${pulp::version} /var/lib/pulp/pulp-manage-db.init"
+    }
+
     exec { 'pulp-manage-db':
-      command   => 'pulp-manage-db && touch /var/lib/pulp/pulp-manage-db.init',
+      command   => "pulp-manage-db && echo ${pulp::version} > /var/lib/pulp/pulp-manage-db.init",
       user      => $pulp::http_user,
       path      => [
         'usr/local/bin',
@@ -17,7 +28,7 @@ class pulp::service {
       ],
       timeout   => 240,
       logoutput => true,
-      creates   => '/var/lib/pulp/pulp-manage-db.init',
+      unless    => "grep -q ${pulp::version} /var/lib/pulp/pulp-manage-db.init",
       before    => [
         Service['pulp_celerybeat'],
         Service['pulp_resource_manager'],

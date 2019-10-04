@@ -299,4 +299,10 @@ class pulp::config {
     creates => '/etc/pki/pulp/ca.crt',
   }
 
+  file { '/etc/httpd/conf.d/pulp.conf':
+    ensure => absent,
+  }
+  file { '/etc/httpd/conf.d/pulp_content.conf':
+    ensure => absent,
+  }
 }

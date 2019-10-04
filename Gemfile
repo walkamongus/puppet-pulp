@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-puppetversion = ENV['PUPPET_VERSION'].nil? ? '~> 4.5' : ENV['PUPPET_VERSION'].to_s
+puppetversion = ENV['PUPPET_VERSION'].nil? ? '~> 5.5' : ENV['PUPPET_VERSION'].to_s
 puppetver = Gem::Version.new(%r/([\d.]+)/.match(puppetversion)[1])
 
 group :test do

@@ -46,9 +46,9 @@ Puppet::Type.newtype(:pulp_rpm_sync) do
       [
         /^((.*))$/,
         [
-          [ :name ],
+          [ :name ]
         ]
-      ],
+      ]
     ]
   end
 end

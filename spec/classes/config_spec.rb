@@ -7,7 +7,7 @@ describe 'pulp' do
         let(:facts) do
           facts
         end
-        
+
         it { should contain_concat('/etc/pulp/server.conf').with_ensure('present') }
         it { should contain_concat__fragment('database_settings').with_target('/etc/pulp/server.conf') }
         it { should contain_concat__fragment('server_settings').with_target('/etc/pulp/server.conf') }
@@ -33,6 +33,9 @@ describe 'pulp' do
           it { should contain_file('/etc/pulp/repo_auth.conf').with_ensure('file') }
           it { should contain_file('/etc/pulp/server/plugins.conf.d/yum_importer.json').with_ensure('file') }
           it { should contain_file('/etc/pulp/server/plugins.conf.d/iso_importer.json').with_ensure('file') }
+
+          it { is_expected.to contain_file('/etc/httpd/conf.d/pulp.conf').with_ensure('absent') }
+          it { is_expected.to contain_file('/etc/httpd/conf.d/pulp_content.conf').with_ensure('absent') }
         end
 
         #context "pulp::config class with custom parameters on #{os}" do

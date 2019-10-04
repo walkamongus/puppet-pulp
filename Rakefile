@@ -27,7 +27,7 @@ exclude_paths = [
   "bundle/**/*",
   "pkg/**/*",
   "vendor/**/*",
-  "spec/**/*",
+  "spec/**/*"
 ]
 
 Rake::Task[:lint].clear
@@ -60,5 +60,5 @@ task :test => [
   :syntax,
   :lint,
   :rubocop,
-  :spec,
+  :spec
 ]

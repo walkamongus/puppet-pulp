@@ -49,7 +49,7 @@ Puppet::Type.type(:pulp_rpm_sync).provide(:api, :parent => Pulp::Api) do
       :override_config   => @resource[:override_config],
       :schedule          => @resource[:sync_schedule],
       :failure_threshold => @resource[:failure_threshold],
-      :enabled           => sym_to_bool(@resource[:enabled]),
+      :enabled           => sym_to_bool(@resource[:enabled])
     }
     request(:post, "/v2/repositories/#{@resource[:repo]}/importers/yum_importer/schedules/sync/", params)
     @property_hash[:ensure] = :present
@@ -75,7 +75,7 @@ Puppet::Type.type(:pulp_rpm_sync).provide(:api, :parent => Pulp::Api) do
     :enabled,
     :override_config,
     :sync_schedule,
-    :failure_threshold,
+    :failure_threshold
   ].each do |property|
     define_method(property.to_s + '=') do |value|
       @needs_update = true
@@ -87,7 +87,7 @@ Puppet::Type.type(:pulp_rpm_sync).provide(:api, :parent => Pulp::Api) do
       :schedule          => @resource[:sync_schedule],
       :override_config   => @resource[:override_config],
       :failure_threshold => @resource[:failure_threshold],
-      :enabled           => sym_to_bool(@resource[:enabled]),
+      :enabled           => sym_to_bool(@resource[:enabled])
     }
     request(:put, "/v2/repositories/#{@property_hash[:repo]}/importers/yum_importer/schedules/sync/#{@property_hash[:id]}/", params)
   end

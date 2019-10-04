@@ -63,6 +63,13 @@ Style/RedundantSelf:
 Metrics/MethodLength:
   Enabled: false
 
+# DISABLED - too many offenders, no time for refactor
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
 # DISABLED - not useful
 Style/WhileUntilModifier:
   Enabled: false

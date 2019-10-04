@@ -34,8 +34,15 @@ describe 'pulp' do
           it { should contain_file('/etc/pulp/server/plugins.conf.d/yum_importer.json').with_ensure('file') }
           it { should contain_file('/etc/pulp/server/plugins.conf.d/iso_importer.json').with_ensure('file') }
 
-          it { is_expected.to contain_file('/etc/httpd/conf.d/pulp.conf').with_ensure('absent') }
-          it { is_expected.to contain_file('/etc/httpd/conf.d/pulp_content.conf').with_ensure('absent') }
+          it { is_expected.to contain_exec('purge_apache_pulp_file')
+            .with_command('/bin/rm -f /etc/httpd/conf.d/pulp.conf')
+            .with_onlyif('/bin/test -f /etc/httpd/conf.d/pulp.conf')
+          }
+          
+          it { is_expected.to contain_exec('purge_apache_pulp_content_file')
+            .with_command('/bin/rm -f /etc/httpd/conf.d/pulp_content.conf')
+            .with_onlyif('/bin/test -f /etc/httpd/conf.d/pulp_content.conf')
+          }
         end
 
         #context "pulp::config class with custom parameters on #{os}" do
